@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import PixelBlast from '../components/PixelBlast';
 
 interface MainLayoutProps {
     children: ReactNode;
@@ -9,7 +8,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     return (
         <div className="min-h-screen ">
             {/* Fondo de Plasma */}
-
             <div style={{ width: '100%', backgroundColor: 'black', height: '100%', position: 'relative' }}>
                 {/*
                 <PixelBlast

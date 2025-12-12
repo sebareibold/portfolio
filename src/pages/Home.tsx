@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import TextType from "../components/TextType";
+import UserProfileCard from "../components/cardWeb";
 
 const projects = [
   { title: "Proyecto 1", description: "Descripción del proyecto 1" },
@@ -45,16 +46,17 @@ const Home = () => {
           />
         ) : (
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="bg-gray-800/60 backdrop-blur-md rounded-xl p-6 text-white opacity-0 animate-fadeIn"
-                style={{ animationDelay: `${index * 300}ms`, animationFillMode: "forwards" }}
-              >
-                <h2 className="text-2xl font-bold mb-2">{project.title}</h2>
-                <p>{project.description}</p>
-              </div>
-            ))}
+
+            {/* Proyectos Webs, dps hacemos un MAPs*/}
+            <div className="relative z-10">
+              <UserProfileCard />
+            </div>
+
+            {/* Proyectos Apps, dps hacemos un MAPs*/}
+            <div className="relative z-10">
+              //<UserProfileCard />
+            </div>
+
           </div>
         )}
       </div>
