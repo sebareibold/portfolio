@@ -133,13 +133,14 @@ export default function CardWeb() {
                   <div className="space-y-2">
                     <Input
                       value={editForm.name}
-                      onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditForm({ ...editForm, name: e.target.value })}
                       className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-lg font-semibold"
+
                       placeholder="Name"
                     />
                     <Input
                       value={editForm.username}
-                      onChange={(e) => setEditForm({ ...editForm, username: e.target.value })}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditForm({ ...editForm, username: e.target.value })}
                       className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
                       placeholder="Username"
                     />
@@ -200,7 +201,7 @@ export default function CardWeb() {
         {isEditing ? (
           <Textarea
             value={editForm.bio}
-            onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setEditForm({ ...editForm, bio: e.target.value })}
             className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm leading-relaxed resize-none"
             placeholder="Bio"
             rows={3}
@@ -215,7 +216,7 @@ export default function CardWeb() {
             <div className="w-full">
               <Input
                 value={editForm.skills.join(", ")}
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setEditForm({ ...editForm, skills: e.target.value.split(", ").filter((s) => s.trim()) })
                 }
                 className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
@@ -262,7 +263,7 @@ export default function CardWeb() {
                 <MapPin className="h-4 w-4 text-blue-400 flex-shrink-0" />
                 <Input
                   value={editForm.location}
-                  onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditForm({ ...editForm, location: e.target.value })}
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm flex-1"
                   placeholder="Location"
                 />
@@ -271,7 +272,7 @@ export default function CardWeb() {
                 <Calendar className="h-4 w-4 text-blue-400 flex-shrink-0" />
                 <Input
                   value={editForm.joinDate}
-                  onChange={(e) => setEditForm({ ...editForm, joinDate: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditForm({ ...editForm, joinDate: e.target.value })}
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm flex-1"
                   placeholder="Join Date"
                 />
@@ -280,7 +281,7 @@ export default function CardWeb() {
                 <Mail className="h-4 w-4 text-blue-400 flex-shrink-0" />
                 <Input
                   value={editForm.email}
-                  onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditForm({ ...editForm, email: e.target.value })}
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm flex-1"
                   placeholder="Email"
                 />
@@ -289,7 +290,7 @@ export default function CardWeb() {
                 <Globe className="h-4 w-4 text-blue-400 flex-shrink-0" />
                 <Input
                   value={editForm.website}
-                  onChange={(e) => setEditForm({ ...editForm, website: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditForm({ ...editForm, website: e.target.value })}
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm flex-1"
                   placeholder="Website"
                 />

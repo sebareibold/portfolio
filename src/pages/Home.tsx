@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import TextType from "../components/TextType";
-import UserProfileCard from "../components/cardWeb";
+import CardWeb from "../components/CardWeb";
 
-const projects = [
+/* const projects = [
   { title: "Proyecto 1", description: "Descripción del proyecto 1" },
   { title: "Proyecto 2", description: "Descripción del proyecto 2" },
   { title: "Proyecto 3", description: "Descripción del proyecto 3" },
-];
+]; */
 
 const Home = () => {
   const [showNext, setShowNext] = useState(false);
@@ -49,33 +49,18 @@ const Home = () => {
 
             {/* Proyectos Webs, dps hacemos un MAPs*/}
             <div className="relative z-10">
-              <UserProfileCard />
+              <CardWeb />
             </div>
 
             {/* Proyectos Apps, dps hacemos un MAPs*/}
             <div className="relative z-10">
-              //<UserProfileCard />
+              {/* <CardWeb /> */}
             </div>
 
           </div>
         )}
       </div>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out;
-        }
-      `}</style>
     </div>
   );
 };
