@@ -6,29 +6,25 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
     return (
-        <div className="min-h-screen ">
-            {/* Fondo de Plasma */}
-            <div style={{ width: '100%', backgroundColor: 'black', height: '100%', position: 'relative' }}>
-                {/*
-                <PixelBlast
-                    variant="circle"
-                    pixelSize={1}
-                    color="#ffffff"
-                    patternScale={3}
-                    patternDensity={0.7}
-                    pixelSizeJitter={0.5}
-                    enableRipples
-                    rippleSpeed={0.1}
-                    rippleThickness={0.12}
-                    rippleIntensityScale={0.04}
-                    speed={0.6}
-                    edgeFade={0.25}
-                    transparent
-                />
-                */}
-
+        <div className="min-h-screen flex items-center justify-center p-3 sm:p-4 lg:p-6">
+            {/* ===== AURORA ANIMATED BACKGROUND ===== */}
+            <div className="aurora-bg">
+                <div className="aurora-orb aurora-orb--cyan" />
             </div>
-            <div className="relative z-10 min-h-screen">
+
+            {/* ===== MAIN CONTAINER - Glass Card ===== */}
+            <div
+                className="relative z-10 w-full max-w-[1600px] overflow-hidden"
+                style={{
+                    height: 'calc(100vh - 3rem)',
+                    maxHeight: '900px',
+                    display: 'grid',
+                    gridTemplateColumns: '360px 1fr',
+                    gap: '1rem',
+                    overflow: 'visible',
+                }}
+                id="portfolio-container"
+            >
                 {children}
             </div>
         </div>
