@@ -4,16 +4,20 @@ import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
 import BottomBar from './BottomBar';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import {
-    projects,
-    type Project,
-    type ProjectCategory,
-} from '../data/projects';
+import { getProjects } from '@/data/projects';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/i18n/translations';
+import type { Project, ProjectCategory } from '@/types';
+
 
 type ViewMode = 'carousel' | 'grid';
 const GRID_INITIAL_COUNT = 4;
 
 const ProjectsSection = () => {
+    const { language } = useLanguage();
+    const t = translations[language];
+    const projects = getProjects(language);
+    
     const [activeFilter, setActiveFilter] = useState<ProjectCategory | 'All'>('All');
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,7 +27,7 @@ const ProjectsSection = () => {
     const filteredProjects = useMemo(() => {
         if (activeFilter === 'All') return projects;
         return projects.filter((p) => p.category === activeFilter);
-    }, [activeFilter]);
+    }, [activeFilter, projects]);
 
     // Reset cuando cambia el filtro
     useEffect(() => {
@@ -48,28 +52,24 @@ const ProjectsSection = () => {
                     className="flex-shrink-0 border-b"
                     style={{ borderColor: 'var(--glass-border)' }}
                 >
-                    <TopNavbar 
-                    activeFilter={activeFilter} 
-                    onFilterChange={setActiveFilter}
-                    viewMode={viewMode}
-                    onViewModeChange={setViewMode}
-                />
+                    <TopNavbar
+                        activeFilter={activeFilter}
+                        onFilterChange={setActiveFilter}
+                        viewMode={viewMode}
+                        onViewModeChange={setViewMode}
+                    />
                 </div>
 
                 {/* ===== PROJECTS AREA ===== */}
-                <div className="flex-1 overflow-hidden flex items-center justify-center px-5 pt-3 pb-6">
+                <div className="flex-1 overflow-hidden flex items-center justify-center px-2 ">
                     {filteredProjects.length > 0 ? (
                         viewMode === 'carousel' ? (
                             /* ===== CAROUSEL VIEW ===== */
                             <div className="flex items-center gap-6 w-full max-w-6xl h-[90%] mb-3 relative">
                                 {/* Floating Dots Card - positioned above the project card */}
-                                <div 
+                                <div
                                     className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-1.5 px-3  rounded-lg"
-                                    style={{
-                                        background: 'rgba(0,0,0,0.4)',
-                                        backdropFilter: 'blur(12px)',
-                                        border: '1px solid rgba(255,255,255,0.1)',
-                                    }}
+
                                 >
                                     {filteredProjects.map((_, i) => (
                                         <button
@@ -146,7 +146,7 @@ const ProjectsSection = () => {
                                             onClick={handleLoadMore}
                                             className="glass-button px-6 py-2 text-sm"
                                         >
-                                            Cargar más
+                                            {t.loadMore}
                                         </button>
                                     </div>
                                 )}
@@ -155,7 +155,7 @@ const ProjectsSection = () => {
                     ) : (
                         <div className="flex items-center justify-center w-full h-full">
                             <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                                No hay proyectos en esta categoría.
+                                {t.noProjects}
                             </p>
                         </div>
                     )}

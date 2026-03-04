@@ -1,4 +1,5 @@
-import type { ProjectCategory } from '../data/projects';
+import type { ProjectCategory } from '@/types';
+
 import { Folder } from 'lucide-react';
 
 interface BottomBarProps {

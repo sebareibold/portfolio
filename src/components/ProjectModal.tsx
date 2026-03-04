@@ -1,5 +1,10 @@
 import { useEffect, useCallback, useState } from 'react';
-import { type Project, categoryColors } from '../data/projects';
+import { categoryColors } from '@/data/projects';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/i18n/translations';
+import type { Project } from '@/types';
+
+
 import {
     X,
     ExternalLink,
@@ -27,6 +32,8 @@ const categoryIcons: Record<string, LucideIcon> = {
 };
 
 const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
+    const { language } = useLanguage();
+    const t = translations[language];
     const [isClosing, setIsClosing] = useState(false);
     const Icon = categoryIcons[project.category] || Globe;
     const gradientClass = categoryColors[project.category];
@@ -70,7 +77,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                 id="project-modal-content"
             >
                 {/* ===== HEADER ===== */}
-                <div className="sticky top-0 z-10 flex items-start justify-between p-6 pb-4" style={{ background: 'rgba(12, 18, 34, 0.85)', backdropFilter: 'blur(16px)' }}>
+                <div className="sticky top-0 z-10 flex items-start justify-between p-6 pb-4" style={{ background: 'rgba(0, 0, 0, 0.85)', backdropFilter: 'blur(16px)' }}>
                     <div className="flex items-start gap-4 flex-1 min-w-0">
                         {/* Category icon */}
                         <div
@@ -100,7 +107,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                             border: '1px solid rgba(255,255,255,0.1)',
                         }}
                         id="modal-close-btn"
-                        aria-label="Cerrar modal"
+                        aria-label={t.close}
                     >
                         <X className="w-5 h-5 text-white/60 hover:text-white" />
                     </button>
@@ -113,7 +120,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                         <div className="flex items-center gap-2 mb-2">
                             <Lightbulb className="w-4 h-4 text-blue-400" />
                             <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                                Descripción
+                                {t.description}
                             </h3>
                         </div>
                         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
@@ -124,9 +131,9 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                     {/* Problem */}
                     <section>
                         <div className="flex items-center gap-2 mb-2">
-                            <Lightbulb className="w-4 h-4 text-purple-400" />
+                            <Lightbulb className="w-4 h-4 text-sky-400" />
                             <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                                Problema que resuelve
+                                {t.problem}
                             </h3>
                         </div>
                         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
@@ -139,7 +146,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                         <div className="flex items-center gap-2 mb-3">
                             <Wrench className="w-4 h-4 text-cyan-400" />
                             <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                                Tecnologías
+                                {t.technologies}
                             </h3>
                         </div>
                         <div className="flex flex-wrap gap-2">
@@ -148,8 +155,8 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                                     key={i}
                                     className="text-xs px-3 py-1.5 rounded-lg font-medium transition-all duration-300 hover:scale-105"
                                     style={{
-                                        background: 'rgba(59, 130, 246, 0.12)',
-                                        border: '1px solid rgba(59, 130, 246, 0.2)',
+                                        background: 'rgba(96, 165, 250, 0.12)',
+                                        border: '1px solid rgba(96, 165, 250, 0.2)',
                                         color: '#93c5fd',
                                     }}
                                 >
@@ -162,9 +169,9 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                     {/* Architecture */}
                     <section>
                         <div className="flex items-center gap-2 mb-2">
-                            <Layers className="w-4 h-4 text-emerald-400" />
+                            <Layers className="w-4 h-4 text-blue-400" />
                             <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                                Arquitectura
+                                {t.architecture}
                             </h3>
                         </div>
                         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
@@ -183,7 +190,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                                 id="modal-github-link"
                             >
                                 <Github className="w-4 h-4" />
-                                Código fuente
+                                {t.viewCode}
                             </a>
                         )}
                         {project.demoUrl && (
@@ -198,7 +205,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                                 id="modal-demo-link"
                             >
                                 <ExternalLink className="w-4 h-4" />
-                                Ver demo
+                                {t.liveDemo}
                             </a>
                         )}
                     </div>

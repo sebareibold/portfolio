@@ -7,10 +7,8 @@ interface MainLayoutProps {
 const MainLayout = ({ children }: MainLayoutProps) => {
     return (
         <div className="min-h-screen flex items-center justify-center p-3 sm:p-4 lg:p-6">
-            {/* ===== AURORA ANIMATED BACKGROUND ===== */}
-            <div className="aurora-bg">
-                <div className="aurora-orb aurora-orb--cyan" />
-            </div>
+            {/* ===== OPTIMIZED GRADIENT BACKGROUND ===== */}
+            <div className="liquid-glass-bg" />
 
             {/* ===== MAIN CONTAINER - Glass Card ===== */}
             <div

@@ -1,15 +1,13 @@
-import { profile } from '../data/profile';
+import { getProfile } from '@/data/profile';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/i18n/translations';
 import {
     Brain,
-    Code2,
-    FileCode2,
     Download,
     Github,
     Linkedin,
     Mail,
-    Layout,
 } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 import {
     SiReact,
     SiTypescript,
@@ -22,30 +20,46 @@ import {
     SiLangchain,
 } from 'react-icons/si';
 import type { IconType } from 'react-icons';
-
-const iconMap: Record<string, LucideIcon> = {
-    Brain,
-    Code2,
-    FileCode2,
-    Layout,
-};
+import type { Experience } from '@/types';
 
 interface SkillBrand { Icon: IconType; color: string; }
 const skillBrandMap: Record<string, SkillBrand> = {
-    'React.js':     { Icon: SiReact,      color: '#61DAFB' },
-    'TypeScript':   { Icon: SiTypescript, color: '#3178C6' },
-    'Python':       { Icon: SiPython,     color: '#3776AB' },
-    'Node.js':      { Icon: SiNodedotjs,  color: '#339933' },
-    'FastAPI':      { Icon: SiFastapi,    color: '#009688' },
-    'Docker':       { Icon: SiDocker,     color: '#2496ED' },
-    'PostgreSQL':   { Icon: SiPostgresql, color: '#4169E1' },
-    'Preact.js':    { Icon: SiPreact,     color: '#673AB8' },
-    'LangChain':    { Icon: SiLangchain,  color: '#1C3C3C' },
+    'React.js': { Icon: SiReact, color: '#61DAFB' },
+    'TypeScript': { Icon: SiTypescript, color: '#3178C6' },
+    'Python': { Icon: SiPython, color: '#3776AB' },
+    'Node.js': { Icon: SiNodedotjs, color: '#339933' },
+    'FastAPI': { Icon: SiFastapi, color: '#009688' },
+    'Docker': { Icon: SiDocker, color: '#2496ED' },
+    'PostgreSQL': { Icon: SiPostgresql, color: '#4169E1' },
+    'Preact.js': { Icon: SiPreact, color: '#673AB8' },
+    'LangChain': { Icon: SiLangchain, color: '#1C3C3C' },
+};
+
+const ExperienceItem = ({ exp }: { exp: Experience }) => {
+    return (
+
+        <div className="experience-item">
+            <div className="flex gap-2 mb-0.5">
+                <h3 className="text-sm font-semibold text-white leading-tight">{exp.role}</h3>
+            </div>
+            <p className="text-[11px] font-semibold mb-0 tracking-wide" style={{ color: '#7dd3fc' }}>
+                {exp.place}
+            </p>
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                {exp.description}
+            </p>
+        </div>
+
+    );
 };
 
 const ProfileSidebar = () => {
+    const { language } = useLanguage();
+    const profile = getProfile(language);
+    const t = translations[language];
+    
     return (
-        <aside className="p-6 flex flex-col gap-5 h-full overflow-y-auto">
+        <aside className="p-6 flex flex-col gap-6 h-full overflow-y-auto">
             {/* ===== NAME & ROLES ===== */}
             <div className="space-y-3">
                 <h1 className="font-display font-bold text-2xl text-white leading-tight">
@@ -61,7 +75,7 @@ const ProfileSidebar = () => {
                                     i === 0
                                         ? '#93c5fd'
                                         : i === 1
-                                            ? '#c4b5fd'
+                                            ? '#7dd3fc'
                                             : 'rgba(255,255,255,0.6)',
                             }}
                         >
@@ -71,48 +85,39 @@ const ProfileSidebar = () => {
                 </div>
             </div>
 
-           
 
-            {/* ===== EXPERIENCE ===== */}
+
+            {/* ===== EXPERIENCE LABORAL ===== */}
             <div className="space-y-3">
                 <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>
-                    Experiencia resumida
+                    {t.experience}
                 </h2>
                 <div className="space-y-4">
-                    {profile.experience.map((exp, i) => {
-                        const Icon = iconMap[exp.icon] || Code2;
-                        return (
-                            <div key={i} className="experience-item">
-                                <div className="flex items-center gap-2 mb-0.5">
-                                    <Icon className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
-                                    <h3 className="text-sm font-semibold text-white leading-tight">{exp.role}</h3>
-                                </div>
-                                <p className="text-[11px] font-semibold mb-0 ml-5 tracking-wide" style={{ color: '#c4b5fd' }}>
-                                    {exp.place}
-                                </p>
-                                <p className="text-[10px] mb-1.5 ml-5 font-mono tracking-tight" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                                    {exp.period.includes('Actualidad') ? (
-                                        <>
-                                            {exp.period.replace('Actualidad', '')}
-                                            <span className="font-sans font-semibold" style={{ color: '#4ade80' }}>Actualidad</span>
-                                        </>
-                                    ) : (
-                                        exp.period
-                                    )}
-                                </p>
-                                <p className="text-xs leading-relaxed ml-5" style={{ color: 'var(--text-secondary)' }}>
-                                    {exp.description}
-                                </p>
-                            </div>
-                        );
-                    })}
+                    {profile.experience.map((exp, i) => (
+                        <ExperienceItem key={i} exp={exp} />
+                    ))}
                 </div>
             </div>
+
+            {/* ===== EXPERIENCE FREELANCE ===== */}
+            <div className="space-y-3">
+                <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent-sky)' }}>
+                    {t.freelance}
+                </h2>
+                <div className="space-y-3">
+                    {profile.freelanceExperience.map((exp, i) => (
+                        <p key={i} className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                            {exp.description}
+                        </p>
+                    ))}
+                </div>
+            </div>
+
 
             {/* ===== SKILLS ===== */}
             <div className="space-y-3 overflow-hidden">
                 <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>
-                    Skills
+                    {t.skills}
                 </h2>
                 {/* Carrusel automático infinito */}
                 <div className="relative overflow-hidden">
@@ -152,11 +157,8 @@ const ProfileSidebar = () => {
                 </div>
             </div>
 
-            {/* ===== SPACER ===== */}
-            <div className="flex-1" />
-
             {/* ===== SOCIAL LINKS ===== */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pt-2">
                 <a
                     href={profile.githubUrl}
                     target="_blank"
@@ -194,10 +196,11 @@ const ProfileSidebar = () => {
                 className="glass-button w-full text-center"
             >
                 <Download className="w-4 h-4" />
-                Descargar CV
+                {t.downloadCV}
             </a>
         </aside>
     );
 };
 
 export default ProfileSidebar;
+

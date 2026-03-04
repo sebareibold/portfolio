@@ -1,4 +1,7 @@
-import { type Project, categoryColors } from '../data/projects';
+import { categoryColors } from '@/data/projects';
+import type { Project } from '@/types';
+
+
 import { ArrowRight, Globe, Cpu, Smartphone, Server } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -21,7 +24,8 @@ const ProjectCard = ({ project, onSeeMore, index }: ProjectCardProps) => {
 
     return (
         <div
-            className="glass-card group cursor-pointer overflow-hidden"
+            className="glass-card group cursor-pointer"
+
             style={{
                 animationDelay: `${index * 0.1}s`,
                 opacity: 0,
@@ -60,6 +64,21 @@ const ProjectCard = ({ project, onSeeMore, index }: ProjectCardProps) => {
                         {project.category}
                     </span>
                 </div>
+
+                {/* See more button - bottom right */}
+                <div className="absolute bottom-3 right-3 transition-transform duration-300 group-hover:scale-105">
+                    <button
+                        className="glass-button px-3 py-2 text-xs font-semibold flex items-center gap-1.5"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onSeeMore(project);
+                        }}
+                        id={`see-more-${project.id}`}
+                    >
+                        Ver más
+                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </button>
+                </div>
             </div>
 
             {/* ===== CONTENT ===== */}
@@ -70,44 +89,6 @@ const ProjectCard = ({ project, onSeeMore, index }: ProjectCardProps) => {
                 <p className="text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--text-secondary)' }}>
                     {project.shortDescription}
                 </p>
-
-                {/* Tech preview */}
-                <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 3).map((tech, i) => (
-                        <span
-                            key={i}
-                            className="text-[0.6875rem] px-2 py-0.5 rounded-md font-medium"
-                            style={{
-                                background: 'rgba(255,255,255,0.06)',
-                                color: 'rgba(255,255,255,0.5)',
-                                border: '1px solid rgba(255,255,255,0.06)',
-                            }}
-                        >
-                            {tech}
-                        </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                        <span
-                            className="text-[0.6875rem] px-2 py-0.5 rounded-md font-medium"
-                            style={{ color: 'rgba(255,255,255,0.35)' }}
-                        >
-                            +{project.technologies.length - 3}
-                        </span>
-                    )}
-                </div>
-
-                {/* See more */}
-                <button
-                    className="flex items-center gap-2 text-sm font-medium text-blue-400 hover:text-blue-300 transition-all duration-300 group/btn mt-1"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onSeeMore(project);
-                    }}
-                    id={`see-more-${project.id}`}
-                >
-                    See more
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-                </button>
             </div>
         </div>
     );
